@@ -1,0 +1,340 @@
+@import './base.css';
+
+#app {
+  max-width: 1280px;
+  margin: 0;
+/*  padding: 2rem; */
+
+  font-weight: normal;
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 0fr 0fr;
+/*    padding: 0 2rem; */
+  }
+}
+
+.content-left {
+  text-align:left;
+  margin: 0 2vw;
+  padding: 2vh 2vw;
+  border-radius: 5px;
+}
+
+.align-horizontal {
+  display: flex;
+}
+
+.align-center {
+  width: 100%;
+  text-align: center;
+  margin-top: 5vh;
+}
+
+.label {
+  width: 100%;
+}
+
+.upload_type {
+  width: 100%;
+  text-align: right;
+  direction: rtl;
+}
+
+button {
+  font-weight: bold;
+  color: black;
+  padding: 0.5em;
+  border: thin solid grey;
+  border-radius: 3px;
+  transition: 0.5s;
+}
+
+button:hover {
+  background-color: white;
+  border: thin solid black;
+  box-shadow: 0px 0px 3px 3px black;
+}
+
+input::file-selector-button {
+  font-weight: bold;
+  color: black;
+  padding: 0.5em;
+  border: thin solid grey;
+  border-radius: 3px;
+}
+
+.main {
+  width: 100vw;
+  min-height: 100vh;
+  max-height: fit-content;
+  display: flex;
+  background-color: #A6E3A1;
+  justify-content: center;
+  align-items: center;
+  padding: 3vh 0;
+}
+
+.main_box {
+  width: 90%;
+  height: 90%;
+  background-color: #191623;
+  border-radius: 100px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  box-shadow: 9px 9px #19162375;
+}
+
+.link_holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title h1 {
+  text-align: center;
+  color: #F9E2AF;
+  font-family: Lilex Nerd Font;
+  font-weight: bold;
+  font-size: 20em;
+}
+
+.title h2 {
+  text-align: left;
+  color: #F9E2AF;
+  font-family: Lilex Nerd Font;
+  font-weight: bold;
+  font-size: 3em;
+}
+
+#titleh2 {
+  margin-top: -40px;
+}
+
+#titletrain {
+  font-size: 3em;
+  text-align: center;
+  color: #191623;
+  padding: 1vh 2vw;
+  background-color: #E7E6E6;
+  border-radius: 25px;
+  box-shadow: 9px 9px #E7E6E675;
+}
+
+.main_link_button {
+  color: #191623;
+  font-family: Lilex Nerd Font;
+  background-color: #E7E6E6;
+  margin: 0vw 5vw;
+  height: 10vh;
+  width: 15vw;
+  border-radius: 15px;
+  font-size: 2em;
+  box-shadow: 5px 5px #E7E6E675;
+  transition: 0.3s;
+  border: None;
+}
+
+.main_link_button:hover {
+  background-color: #A6E3A1;
+  box-shadow: 5px 5px #A6E3A175;
+  border: None;
+}
+
+.dot1 {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 5px;
+  background-color:#FB71A6;
+}
+
+.dot2 {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 5px;
+  background-color:#F9E2AF;
+}
+
+.dot3 {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 5px;
+  background-color:#A6E3A1;
+}
+
+.dot_holder {
+  position: absolute;
+  left: 10vw;
+  top: 10vw;
+}
+
+.subpage_box {
+  width: 90%;
+  height: auto;
+  min-height: 90%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: #FAB387;
+  border-radius: 100px;
+  box-shadow: 9px 9px #FAB38775;
+  flex-direction: column;
+  padding: 3vh 0;
+}
+
+.main_form {
+  width: 45vw;
+  background-color: #E7E6E6;
+  border-radius: 25px;
+  box-shadow: 9px 9px #E7E6E675;
+  margin: 2vh 0;
+}
+
+.loss_curve {
+  width: fit-content;
+  max-width: 90%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3vh 3vw;
+  background-color: #E7E6E6;
+  border-radius: 25px;
+  box-shadow: 9px 9px #E7E6E675;
+  flex-direction: column;
+}
+
+.slider_box {
+  width: 25vw;
+  padding: 2vh 2vw;
+  background-color: #A6E3A1;
+  border-radius: 100px;
+  box-shadow: 9px 9px #A6E3A175;
+  margin-bottom: 2vh;
+}
+
+.slider_inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#accuracy {
+  text-align: right;
+}
+
+.document_card {
+  display: flex;
+  background-color: #FAB387;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 1vh 1vw;
+  flex-direction: column;
+}
+
+.doc_inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.lab {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  text-align: center;
+  margin: 5px 0;
+  margin-left: 10px;
+  align-self: stretch;
+}
+
+.cs {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  margin-left: 10px;
+  text-align: center;
+}
+
+.doc_name {
+  text-align: center;
+  font-weight: bold;
+}
+
+.doc_label {
+  font-weight: bold;
+}
+
+.threshold {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0 10px;
+}
+
+.relevant {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-left: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.document_holder {
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  overflow-x: auto;
+  max-width: 100%;
+  margin-top: 15px;
+}
+
+.document_holder:first-child {
+    margin-left: auto;
+}
+
+.document_holder:last-child {
+    margin-right: auto;
+}
+
+.tsne_plot {
+  width: 50vw;
+  height: 50vh;
+}
+
+.loss_curve_inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.doc_inner_holder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
