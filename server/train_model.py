@@ -17,8 +17,19 @@ from requests_html import HTMLSession
 import requests
 from bs4 import BeautifulSoup
 
+
+from gensim.test.utils import lee_corpus_list
+from gensim.models import Word2Vec
+
+model = Word2Vec(lee_corpus_list, vector_size=300, epochs=100)
+word_vectors = model.wv
+
+word_vectors.save('vectors.kv')
+wv = KeyedVectors.load('vectors.kv')
+
 # Note that this wv.model is not included in the application due to size constraints and must be downloaded separately
-wv = KeyedVectors.load('wv.model')
+# wv = KeyedVectors.load(word_vectors)
+#wv = KeyedVectors.load(wv_model)
 
 class DocSim:
     def __init__(self, stopwords=None):
@@ -26,6 +37,7 @@ class DocSim:
 
     def vectorize(self, doc):
         vectors = np.empty((doc.shape[0], 300))
+        # print("Shape is", doc.shape[0])
         for idx, row in enumerate(doc['Text']):
             words = [w for w in row.split(" ") if w not in self.stopwords]
             word_vecs = []
@@ -67,7 +79,7 @@ def process_url(url):
     session = HTMLSession()
 
     try:
-        html = session.get(url, timeout=1.0)
+        html = session.get(url, timeout=10.0)
     except requests.exceptions.ReadTimeout:
         print("Timed Out")
         session.close()
@@ -132,9 +144,10 @@ def inference_autoencoder(model, df, document_names):
 
 def label_autoencoder(model, related_df, unrelated_df, related_document_names, unrelated_document_names):
     train_df = pd.read_csv("train_data.csv", index_col=False)
-    train_vectors = preprocess_data(train_df)
-
-    test_related_vectors = preprocess_data(related_df)
+    train_vectors = preprocess_data(train_df) # FIRST CALL TO VECTORIZE WHERE SHAPE IS 10
+    
+    # print(related_df)
+    test_related_vectors = preprocess_data(related_df) # SECOND call to vectorize where shape is 0
     test_related_output = model.predict(test_related_vectors)
 
     test_unrelated_vectors = preprocess_data(unrelated_df)
@@ -143,7 +156,7 @@ def label_autoencoder(model, related_df, unrelated_df, related_document_names, u
     test_vectors = np.concatenate([test_related_vectors, test_unrelated_vectors])
     test_output = np.concatenate([test_related_output, test_unrelated_output])
 
-    vis = TSNE(n_components=2, learning_rate='auto', perplexity=3).fit_transform(test_output)
+    vis = TSNE(n_components=2, learning_rate='auto', perplexity=1).fit_transform(test_output)
     vis = [{'x': str(round(vis[i, 0], 2)), 'y': str(round(vis[i, 1], 2))} for i in range(vis.shape[0])]
 
     related_similarities = cosine_similarity(train_vectors, test_related_vectors).mean(axis=0)
@@ -155,12 +168,19 @@ def label_autoencoder(model, related_df, unrelated_df, related_document_names, u
 
 def train_model(model_type, data_type):
     df = pd.DataFrame(columns=['Text'])
-    with ZipFile('data') as zipfile:
+    # print(model_type)
+    # print(data_type)
+    # print(df)
+    with ZipFile('data') as zipfile:  # Assuming 'data.zip' is your zip file
         for filename in tqdm(zipfile.infolist()):
             with zipfile.open(filename) as file:
+                # print("Processing file:", filename)  # Add this line to print the current file being processed
                 if re.match('url_.*.txt', file.name) is not None:
                     f = pd.DataFrame([file.read()], columns=['Text'])
+                    # print("Created DataFrame from text:", f)  # Print the DataFrame created from the text
                     df = pd.concat([df, f])
+                    # print("DataFrame after concatenation:", df)  # Print the DataFrame after concatenating with the new DataFrame
+    # print(df)
 
     if model_type == "ae":
         return train_autoencoder(df)
@@ -224,4 +244,5 @@ def model_label(model_type, data_type):
                 unrelated_df, unrelated_document_names = process_file(file, unrelated_df, filename, unrelated_document_names, data_type)
 
     if model_type == "ae":
+        print(related_df)
         return label_autoencoder(model, related_df, unrelated_df, related_document_names, unrelated_document_names)
